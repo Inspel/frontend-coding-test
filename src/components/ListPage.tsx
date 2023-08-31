@@ -1,5 +1,29 @@
-import { useQuery } from 'react-query'
 import { useLocation } from 'react-router'
+import { useGithubCommits } from '@/hooks/useGithubCommits'
+import {
+  Table,
+  TableCaption,
+  TableContainer,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr
+} from '@chakra-ui/react'
+
+import get from 'lodash.get'
+
+const ROW_MODEL = [
+  'commit.message',
+  'commit.author.name',
+  'commit.author.date'
+] as const
+
+const HEADERS_MAP = {
+  'commit.message': 'Commit message',
+  'commit.author.name': 'Author name',
+  'commit.author.date': 'Commit date'
+}
 
 export const ListPage = () => {
   const location = useLocation()
@@ -7,33 +31,33 @@ export const ListPage = () => {
   const owner = params.get('owner')
   const repo = params.get('repo')
 
-  const headers = new Headers({
-    Authorization: `Bearer ${import.meta.env.VITE_TOKEN}`
-  })
+  const { data } = useGithubCommits(owner, repo)
 
-  const { data } = useQuery(
-    `commits-${owner}-${repo}`,
-    async () => {
-      const response = await fetch(
-        `https://api.github.com/repos/${owner}/${repo}/commits`,
-        {
-          headers,
-          method: 'GET'
-        }
-      )
-      return await response.json()
-    },
-    {
-      enabled: !!owner && !!repo
-    }
-  )
-
-  console.log(data)
+  if (!data) {
+    return null
+  }
 
   return (
-    <div id="list">
-      <h1>List</h1>
-      <p>TODO</p>
-    </div>
+    <TableContainer>
+      <Table variant="simple">
+        <TableCaption>Commits List</TableCaption>
+        <Thead>
+          <Tr>
+            {ROW_MODEL.map((key) => (
+              <Th key={key}>{HEADERS_MAP[key]}</Th>
+            ))}
+          </Tr>
+        </Thead>
+        <Tbody>
+          {data.map((item) => (
+            <Tr key={item.sha}>
+              {ROW_MODEL.map((key) => (
+                <Td key={key}>{get(item, key)}</Td>
+              ))}
+            </Tr>
+          ))}
+        </Tbody>
+      </Table>
+    </TableContainer>
   )
 }
