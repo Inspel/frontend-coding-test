@@ -1,12 +1,21 @@
-import { Route, Routes } from 'react-router'
 import { ListPage } from '@/components/ListPage'
 import { CommitPage } from '@/components/CommitPage'
 import { ErrorPage } from '@/components/ErrorPage'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import React from 'react'
 
-export const Root = () => (
-  <Routes>
-    <Route path="/" element={<ListPage />} />
-    <Route path="/commit" element={<CommitPage />} />
-    <Route path="*" element={<ErrorPage />} />
-  </Routes>
-)
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <ListPage />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: '/commit',
+        element: <CommitPage />
+      }
+    ]
+  }
+])
+
+export const Root = () => <RouterProvider router={router} />
