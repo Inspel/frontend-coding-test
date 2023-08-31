@@ -1,15 +1,16 @@
 import React from 'react'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 import { Root } from '@/components/Root'
+import { QueryClient, QueryClientProvider } from 'react-query'
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Root />
-  }
-])
+const queryClient = new QueryClient()
+
 export const App = () => (
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <Root />
+      </QueryClientProvider>
+    </BrowserRouter>
   </React.StrictMode>
 )

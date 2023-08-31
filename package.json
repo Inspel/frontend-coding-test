@@ -21,9 +21,11 @@
     "@chakra-ui/react": "^2.8.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@types/react-query": "^1.2.9",
     "framer-motion": "^10.16.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-query": "^3.39.3",
     "react-router": "^6.15.0",
     "react-router-dom": "^6.15.0"
   },
