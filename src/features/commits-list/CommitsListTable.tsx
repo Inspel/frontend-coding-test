@@ -44,9 +44,9 @@ export const CommitsListTable = () => {
   }
 
   return (
-    <TableContainer>
+    <TableContainer overflowY="auto">
       <Table variant="simple">
-        <Thead>
+        <Thead position="sticky" top={0} zIndex="docked" bgColor="white">
           <Tr>
             {ROW_MODEL.map((key) => (
               <Th key={key}>{HEADERS_MAP[key]}</Th>
