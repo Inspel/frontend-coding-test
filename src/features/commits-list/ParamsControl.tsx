@@ -16,8 +16,8 @@ export const ParamsControl = () => {
   const [newRepo, setNewRepo] = useState(repo || '')
 
   const handleApplyParams = () => {
-    params.append('owner', newOwner)
-    params.append('repo', newRepo)
+    params.set('owner', newOwner)
+    params.set('repo', newRepo)
 
     location.search = params.toString()
   }
@@ -26,16 +26,24 @@ export const ParamsControl = () => {
     <Box>
       <FormControl>
         <FormLabel>Owner</FormLabel>
-        <Input type="text" onChange={(e) => setNewOwner(e.target.value)} />
+        <Input
+          type="text"
+          onChange={(e) => setNewOwner(e.target.value)}
+          value={newOwner}
+        />
         <FormHelperText>Repo&apos;s owner</FormHelperText>
       </FormControl>
       <FormControl>
         <FormLabel>Repo</FormLabel>
-        <Input type="text" onChange={(e) => setNewRepo(e.target.value)} />
+        <Input
+          type="text"
+          onChange={(e) => setNewRepo(e.target.value)}
+          value={newRepo}
+        />
         <FormHelperText>Repo&apos;s title</FormHelperText>
       </FormControl>
-      <Button onClick={handleApplyParams} disabled={!owner || !repo}>
-        Apply
+      <Button onClick={handleApplyParams} isDisabled={!newOwner || !newRepo}>
+        Fetch commits
       </Button>
     </Box>
   )
