@@ -10,5 +10,3 @@ export const commitListItemSchema = z.object({
     message: z.string()
   })
 })
-
-export const fetchCommitsResponse = z.array(commitListItemSchema)

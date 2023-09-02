@@ -1,20 +1,12 @@
+import React from 'react'
 import { useNavigate } from 'react-router'
-import { useGithubCommits } from '@/features/commits-list/hooks/useGithubCommits'
-import {
-  Skeleton,
-  Stack,
-  Table,
-  TableContainer,
-  Tbody,
-  Th,
-  Thead,
-  Tr
-} from '@chakra-ui/react'
-
+import { Table, TableContainer, Tbody, Th, Thead, Tr } from '@chakra-ui/react'
 import get from 'lodash.get'
 import { Cell } from '@/features/commits-list/Cell'
 import { ROW_MODEL, RowModelType } from '@/features/commits-list/constants'
 import { useAppsSearchParams } from '@/features/shared/useAppsSearchParams'
+import { useGithubCommits } from '@/features/commits-list/hooks/useGithubCommits'
+import { SkeletonRows } from '@/features/commits-list/SkeletonRows'
 
 const HEADERS_MAP: Record<RowModelType, string> = {
   'commit.message': 'Commit message',
@@ -25,26 +17,15 @@ const HEADERS_MAP: Record<RowModelType, string> = {
 export const CommitsListTable = () => {
   const navigate = useNavigate()
   const { owner, repo, searchParams } = useAppsSearchParams()
+  const { data = [], isLoading } = useGithubCommits(owner, repo)
 
-  const { data, isLoading } = useGithubCommits(owner, repo)
-
-  if (isLoading) {
-    return (
-      <Stack>
-        <Skeleton height="3rem" />
-        <Skeleton height="3rem" />
-        <Skeleton height="3rem" />
-        <Skeleton height="3rem" />
-      </Stack>
-    )
-  }
-
-  if (!data) {
-    return null
+  const handleRowClick = (sha: string) => {
+    searchParams.set('commit', sha)
+    navigate(`/commit?${searchParams.toString()}`)
   }
 
   return (
-    <TableContainer overflowY="auto">
+    <TableContainer w="100%" overflowY="auto">
       <Table variant="simple">
         <Thead position="sticky" top={0} zIndex="docked" bgColor="white">
           <Tr>
@@ -54,19 +35,20 @@ export const CommitsListTable = () => {
           </Tr>
         </Thead>
         <Tbody>
-          {data.map((item) => (
-            <Tr
-              key={item.sha}
-              onClick={() => {
-                searchParams.set('commit', item.sha)
-                navigate(`/commit?${searchParams.toString()}`)
-              }}
-            >
-              {ROW_MODEL.map((key) => (
-                <Cell key={key} field={key} data={get(item, key)} />
-              ))}
-            </Tr>
-          ))}
+          {isLoading ? (
+            <SkeletonRows count={3} columns={3} />
+          ) : (
+            data.map((item) => (
+              <Tr
+                key={item.sha as string}
+                onClick={() => handleRowClick(item.sha)}
+              >
+                {ROW_MODEL.map((key) => (
+                  <Cell key={key} field={key} data={get(item, key)} />
+                ))}
+              </Tr>
+            ))
+          )}
         </Tbody>
       </Table>
     </TableContainer>
