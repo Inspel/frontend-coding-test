@@ -1,4 +1,4 @@
-import { Td, Text } from '@chakra-ui/react'
+import { Td } from '@chakra-ui/react'
 import { RowModelType } from '@/features/commits-list/constants'
 
 type ListCellProps = {
@@ -6,15 +6,13 @@ type ListCellProps = {
   data: string
 }
 
-const renderContent = ({ field, data }: ListCellProps) => {
+export const Cell = ({ field, data }: ListCellProps) => {
   switch (field) {
     case 'commit.message':
-      return <Text whiteSpace="normal">{data}</Text>
+      return <Td whiteSpace="normal">{data}</Td>
     case 'commit.author.date':
-      return <Text>{new Date(data).toLocaleString()}</Text>
+      return <Td>{new Date(data).toLocaleString()}</Td>
     default:
-      return <Text>{data}</Text>
+      return <Td>{data}</Td>
   }
 }
-
-export const Cell = (props: ListCellProps) => <Td>{renderContent(props)}</Td>
