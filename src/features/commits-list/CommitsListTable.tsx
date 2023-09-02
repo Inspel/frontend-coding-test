@@ -42,6 +42,19 @@ export const CommitsListTable = () => {
               <Tr
                 key={item.sha as string}
                 onClick={() => handleRowClick(item.sha)}
+                tabIndex={0}
+                role="button"
+                _hover={{ bg: 'gray.100' }}
+                _focus={{
+                  boxShadow: 'outline',
+                  bg: 'gray.100',
+                  outline: 'none'
+                }}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    handleRowClick(item.sha)
+                  }
+                }}
               >
                 {ROW_MODEL.map((key) => (
                   <Cell key={key} field={key} data={get(item, key)} />
