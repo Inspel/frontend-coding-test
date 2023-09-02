@@ -5,10 +5,10 @@ import {
   CardBody,
   HStack,
   Skeleton,
-  Text,
-  VStack
+  Text
 } from '@chakra-ui/react'
 import React from 'react'
+
 type CommitMessageProps = {
   data?: {
     avatarUrl?: string
@@ -23,31 +23,25 @@ export const CommitMessage = ({ data }: CommitMessageProps) => {
 
   return (
     <Card direction={{ base: 'column', sm: 'row' }} variant="outline">
-      <VStack align="start" spacing={4}>
-        <CardBody>
-          <Skeleton isLoaded={!!data}>
-            <HStack spacing={6} align="start">
-              <VStack align="start" spacing={6} w="10%" minW={220}>
-                <HStack spacing={4}>
-                  <Avatar
-                    alignSelf="center"
-                    boxSize="50px"
-                    objectFit="cover"
-                    src={avatarUrl}
-                  />
-                  <Text>{name}</Text>
-                </HStack>
-              </VStack>
-              <Box>
-                <Text fontSize="sm">
-                  {new Date(date || '').toLocaleString()}
-                </Text>
-                <Text>{message}</Text>
-              </Box>
+      <CardBody>
+        <Skeleton isLoaded={!!data}>
+          <HStack spacing={6} align="start">
+            <HStack align="center" spacing={4} w="10%" minW={220}>
+              <Avatar
+                alignSelf="center"
+                boxSize="50px"
+                objectFit="cover"
+                src={avatarUrl}
+              />
+              <Text>{name}</Text>
             </HStack>
-          </Skeleton>
-        </CardBody>
-      </VStack>
+            <Box>
+              <Text fontSize="sm">{new Date(date || '').toLocaleString()}</Text>
+              <Text>{message}</Text>
+            </Box>
+          </HStack>
+        </Skeleton>
+      </CardBody>
     </Card>
   )
 }
