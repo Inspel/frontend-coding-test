@@ -1,4 +1,12 @@
-import { Container, Text, Box, Link } from '@chakra-ui/react'
+import {
+  Container,
+  Text,
+  Box,
+  Link,
+  Alert,
+  AlertIcon,
+  AlertTitle
+} from '@chakra-ui/react'
 import { useAppsSearchParams } from '@/features/shared/useAppsSearchParams'
 import { useQuery } from 'react-query'
 
@@ -11,7 +19,7 @@ import { ChangesTable } from '@/features/commit-view/ChangesTable'
 export const CommitPage = () => {
   const { repo, owner, commit } = useAppsSearchParams()
 
-  const { data } = useQuery(
+  const { data, isError } = useQuery(
     ['commit', owner, repo, commit],
     async () =>
       fetchIndividualCommit(owner as string, repo as string, commit as string),
@@ -47,6 +55,12 @@ export const CommitPage = () => {
       flexDir="column"
       gap={4}
     >
+      {isError && (
+        <Alert status="error">
+          <AlertIcon />
+          <AlertTitle mr={2}>An error occurred while fetching data.</AlertTitle>
+        </Alert>
+      )}
       <Box>
         <Link href={`/?owner=${owner}&repo=${repo}`}>
           ← Back to Commits List

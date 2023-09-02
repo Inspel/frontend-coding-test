@@ -2,16 +2,25 @@ import { Button, FormControl, FormLabel, Input, VStack } from '@chakra-ui/react'
 import React, { FormEventHandler, useState } from 'react'
 import { useAppsSearchParams } from '@/features/shared/useAppsSearchParams'
 import { useNavigate } from 'react-router'
+import { useGithubCommits } from '@/features/commits-list/hooks/useGithubCommits'
 
 export const ParamsControl = () => {
   const { searchParams, owner, repo } = useAppsSearchParams()
   const navigate = useNavigate()
+
+  const { refetch, isLoading, isError } = useGithubCommits(owner, repo)
 
   const [newOwner, setNewOwner] = useState(owner || '')
   const [newRepo, setNewRepo] = useState(repo || '')
 
   const handleApplyParams: FormEventHandler = (e) => {
     e.preventDefault()
+
+    if (isError) {
+      refetch()
+      return
+    }
+
     searchParams.set('owner', newOwner)
     searchParams.set('repo', newRepo)
     navigate(`?${searchParams.toString()}`, { replace: true })
@@ -37,7 +46,7 @@ export const ParamsControl = () => {
           />
         </FormControl>
       </VStack>
-      <Button type="submit" isDisabled={!newOwner || !newRepo}>
+      <Button type="submit" isDisabled={!newOwner || !newRepo || isLoading}>
         Fetch commits
       </Button>
     </VStack>

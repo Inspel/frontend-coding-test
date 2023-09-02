@@ -1,6 +1,15 @@
 import React from 'react'
 import { useNavigate } from 'react-router'
-import { Table, TableContainer, Tbody, Th, Thead, Tr } from '@chakra-ui/react'
+import {
+  Alert,
+  AlertIcon,
+  Table,
+  TableContainer,
+  Tbody,
+  Th,
+  Thead,
+  Tr
+} from '@chakra-ui/react'
 import get from 'lodash.get'
 import { Cell } from '@/features/commits-list/Cell'
 import { ROW_MODEL, RowModelType } from '@/features/commits-list/constants'
@@ -17,7 +26,7 @@ const HEADERS_MAP: Record<RowModelType, string> = {
 export const CommitsListTable = () => {
   const navigate = useNavigate()
   const { owner, repo, searchParams } = useAppsSearchParams()
-  const { data = [], isLoading } = useGithubCommits(owner, repo)
+  const { data = [], isLoading, isError, error } = useGithubCommits(owner, repo)
 
   const handleRowClick = (sha: string) => {
     searchParams.set('commit', sha)
@@ -26,6 +35,12 @@ export const CommitsListTable = () => {
 
   return (
     <TableContainer w="100%" overflowY="auto">
+      {isError && (
+        <Alert status="error">
+          <AlertIcon />
+          {error ? (error as Error).message : 'An unknown error occurred'}
+        </Alert>
+      )}
       <Table variant="simple">
         <Thead position="sticky" top={0} zIndex="docked" bgColor="white">
           <Tr>
