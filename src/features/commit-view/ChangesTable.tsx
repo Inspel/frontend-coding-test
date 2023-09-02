@@ -1,4 +1,14 @@
-import { Table, Tbody, Td, Text, Th, Thead, Tr, VStack } from '@chakra-ui/react'
+import {
+  Box,
+  Table,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tr,
+  VStack
+} from '@chakra-ui/react'
 import { SkeletonRows } from '@/features/commits-list/SkeletonRows'
 import React from 'react'
 import { IndividualCommitType } from '@/types'
@@ -10,9 +20,11 @@ type ChangesTableProps = {
 export const ChangesTable = ({ files = [] }: ChangesTableProps) => {
   return (
     <VStack align="start" spacing={2}>
-      <Text fontWeight="bold">{`${
-        files.length ? `${files.length} ` : ''
-      }Changed Files:`}</Text>
+      <Box>
+        <Text fontWeight="bold">{`Changed Files${
+          files.length ? `: ${files.length}` : ''
+        }`}</Text>
+      </Box>
       <Table variant="simple">
         <Thead>
           <Tr>
