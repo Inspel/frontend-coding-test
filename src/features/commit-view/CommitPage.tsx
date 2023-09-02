@@ -1,11 +1,11 @@
 import {
   Container,
   Text,
-  Box,
   Link,
   Alert,
   AlertIcon,
-  AlertTitle
+  AlertTitle,
+  VStack
 } from '@chakra-ui/react'
 import { useAppsSearchParams } from '@/features/shared/useAppsSearchParams'
 import { useQuery } from 'react-query'
@@ -47,7 +47,6 @@ export const CommitPage = () => {
   return (
     <Container
       maxW="container.xl"
-      maxH="100vh"
       bgColor="white"
       pt={8}
       pb={8}
@@ -55,20 +54,29 @@ export const CommitPage = () => {
       flexDir="column"
       gap={4}
     >
-      {isError && (
-        <Alert status="error">
-          <AlertIcon />
-          <AlertTitle mr={2}>An error occurred while fetching data.</AlertTitle>
-        </Alert>
-      )}
-      <Box>
+      <VStack
+        gap={2}
+        align="start"
+        position="sticky"
+        top={0}
+        zIndex="docked"
+        bgColor="white"
+      >
         <Link href={`/?owner=${owner}&repo=${repo}`}>
           ← Back to Commits List
         </Link>
-      </Box>
-      <Text fontSize="2xl" fontWeight="bold">
-        Commit Details
-      </Text>
+        {isError && (
+          <Alert status="error">
+            <AlertIcon />
+            <AlertTitle mr={2}>
+              An error occurred while fetching data.
+            </AlertTitle>
+          </Alert>
+        )}
+        <Text fontSize="2xl" fontWeight="bold">
+          Commit Details
+        </Text>
+      </VStack>
       <CommitMessage data={commitMessageData} />
       <CommitChanges data={commitChangesData} />
       <ChangesTable files={data?.files} />
