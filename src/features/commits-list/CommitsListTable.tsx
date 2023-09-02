@@ -14,7 +14,7 @@ import {
 import get from 'lodash.get'
 import { Cell } from '@/features/commits-list/Cell'
 import { ROW_MODEL, RowModelType } from '@/features/commits-list/constants'
-import { useSearchParams } from '@/features/shared/useSearchParams'
+import { useAppsSearchParams } from '@/features/shared/useAppsSearchParams'
 
 const HEADERS_MAP: Record<RowModelType, string> = {
   'commit.message': 'Commit message',
@@ -24,7 +24,7 @@ const HEADERS_MAP: Record<RowModelType, string> = {
 
 export const CommitsListTable = () => {
   const navigate = useNavigate()
-  const { owner, repo, params } = useSearchParams()
+  const { owner, repo, searchParams } = useAppsSearchParams()
 
   const { data, isLoading } = useGithubCommits(owner, repo)
 
@@ -58,8 +58,8 @@ export const CommitsListTable = () => {
             <Tr
               key={item.sha}
               onClick={() => {
-                params.set('commit', item.sha)
-                navigate(`/commit?${params.toString()}`)
+                searchParams.set('commit', item.sha)
+                navigate(`/commit?${searchParams.toString()}`)
               }}
             >
               {ROW_MODEL.map((key) => (

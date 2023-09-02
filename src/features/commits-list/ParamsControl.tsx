@@ -1,25 +1,20 @@
-import {
-  Button,
-  FormControl,
-  FormHelperText,
-  FormLabel,
-  Input,
-  VStack
-} from '@chakra-ui/react'
+import { Button, FormControl, FormLabel, Input, VStack } from '@chakra-ui/react'
 import React, { useState } from 'react'
-import { useSearchParams } from '@/features/shared/useSearchParams'
+import { useAppsSearchParams } from '@/features/shared/useAppsSearchParams'
+import { useNavigate } from 'react-router'
 
 export const ParamsControl = () => {
-  const { params, owner, repo } = useSearchParams()
+  const { searchParams, owner, repo } = useAppsSearchParams()
+  const navigate = useNavigate()
 
   const [newOwner, setNewOwner] = useState(owner || '')
   const [newRepo, setNewRepo] = useState(repo || '')
 
   const handleApplyParams = () => {
-    params.set('owner', newOwner)
-    params.set('repo', newRepo)
+    searchParams.set('owner', newOwner)
+    searchParams.set('repo', newRepo)
 
-    location.search = params.toString()
+    navigate(`?${searchParams.toString()}`, { replace: true })
   }
 
   return (
