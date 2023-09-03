@@ -1,11 +1,18 @@
-import { useQuery } from 'react-query'
+import { useInfiniteQuery } from 'react-query'
 import { fetchCommits } from '@/api/fetchCommits'
 
-export const useGithubCommits = (owner: string | null, repo: string | null) =>
-  useQuery(
+const PAGE_SIZE = 30
+
+export const useGithubCommits = (owner: string | null, repo: string | null) => {
+  return useInfiniteQuery(
     ['commits', owner, repo],
-    () => fetchCommits(owner as string, repo as string),
+    async ({ pageParam = 1 }) => {
+      return fetchCommits(owner as string, repo as string, pageParam, PAGE_SIZE)
+    },
     {
-      enabled: !!owner && !!repo
+      enabled: !!owner && !!repo,
+      getNextPageParam: (lastPage, pages) =>
+        lastPage.length < PAGE_SIZE ? false : pages.length + 1
     }
   )
+}

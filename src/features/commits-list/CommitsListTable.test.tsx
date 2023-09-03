@@ -9,34 +9,37 @@ import { vi } from 'vitest'
 vi.mock('@/features/shared/useAppSearchParams')
 vi.mock('react-router')
 vi.mock('@/features/commits-list/hooks/useGithubCommits')
+vi.mock('@/features/commits-list/hooks/useInfiniteScroll')
 
 describe('CommitsListTable', () => {
   const navigateMock = vi.fn()
   const timestamp1 = '2018-04-03T09:33:38Z'
   const timestamp2 = '2019-05-03T09:33:38Z'
 
-  const sampleData = [
-    {
-      sha: 'sha1',
-      commit: {
-        message: 'message1',
-        author: {
-          name: 'author1',
-          date: timestamp1
+  const sampleData = {
+    pages: [
+      {
+        sha: 'sha1',
+        commit: {
+          message: 'message1',
+          author: {
+            name: 'author1',
+            date: timestamp1
+          }
+        }
+      },
+      {
+        sha: 'sha2',
+        commit: {
+          message: 'message2',
+          author: {
+            name: 'author2',
+            date: timestamp2
+          }
         }
       }
-    },
-    {
-      sha: 'sha2',
-      commit: {
-        message: 'message2',
-        author: {
-          name: 'author2',
-          date: timestamp2
-        }
-      }
-    }
-  ]
+    ]
+  }
 
   beforeEach(() => {
     vi.mocked(useAppSearchParams).mockReturnValue({
@@ -48,7 +51,7 @@ describe('CommitsListTable', () => {
 
     vi.mocked(useNavigate).mockReturnValue(navigateMock)
     vi.mocked(useGithubCommits).mockReturnValue({
-      data: [],
+      data: { pages: [] },
       isLoading: false,
       isError: false,
       error: null
@@ -69,7 +72,7 @@ describe('CommitsListTable', () => {
 
   it('should display loading skeleton when data is loading', () => {
     vi.mocked(useGithubCommits).mockReturnValue({
-      data: [],
+      data: { pages: [] },
       isLoading: true,
       isError: false,
       error: null
@@ -83,7 +86,7 @@ describe('CommitsListTable', () => {
 
   it('should display error alert when there is an error', () => {
     vi.mocked(useGithubCommits).mockReturnValue({
-      data: [],
+      data: { pages: [] },
       isLoading: false,
       isError: true,
       error: new Error('An error occurred')

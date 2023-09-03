@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { useNavigate } from 'react-router'
 import {
   Alert,
@@ -16,6 +16,7 @@ import { ROW_MODEL, RowModelType } from '@/features/commits-list/constants'
 import { useAppSearchParams } from '@/features/shared/useAppSearchParams'
 import { useGithubCommits } from '@/features/commits-list/hooks/useGithubCommits'
 import { SkeletonRows } from '@/features/commits-list/SkeletonRows'
+import { useInfiniteScroll } from '@/features/commits-list/hooks/useInfiniteScroll'
 
 const HEADERS_MAP: Record<RowModelType, string> = {
   'commit.message': 'Commit message',
@@ -26,7 +27,26 @@ const HEADERS_MAP: Record<RowModelType, string> = {
 export const CommitsListTable = () => {
   const navigate = useNavigate()
   const { owner, repo, searchParams } = useAppSearchParams()
-  const { data = [], isLoading, isError, error } = useGithubCommits(owner, repo)
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+    isError,
+    error
+  } = useGithubCommits(owner, repo)
+
+  const allData = data ? data.pages.flat() : []
+
+  const lastRowRef = useRef(null)
+
+  useInfiniteScroll({
+    target: lastRowRef,
+    onIntersect: fetchNextPage,
+    hasNextPage: !!hasNextPage,
+    isFetching: isFetchingNextPage
+  })
 
   const handleRowClick = (sha: string) => {
     searchParams.set('commit', sha)
@@ -38,7 +58,7 @@ export const CommitsListTable = () => {
       {isError && (
         <Alert status="error">
           <AlertIcon />
-          {error ? (error as Error).message : 'An unknown error occurred'}
+          {error instanceof Error ? error.message : 'An unknown error occurred'}
         </Alert>
       )}
       <Table variant="simple">
@@ -53,8 +73,9 @@ export const CommitsListTable = () => {
           {isLoading ? (
             <SkeletonRows count={3} columns={3} />
           ) : (
-            data.map((item) => (
+            allData.map((item, index) => (
               <Tr
+                ref={index === allData.length - 10 ? lastRowRef : null}
                 key={item.sha as string}
                 onClick={() => handleRowClick(item.sha)}
                 tabIndex={0}

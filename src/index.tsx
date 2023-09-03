@@ -10,11 +10,9 @@ const container = document.getElementById('root') as HTMLDivElement
 const root = createRoot(container)
 
 root.render(
-  <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <ChakraProvider>
-        <Router />
-      </ChakraProvider>
-    </QueryClientProvider>
-  </React.StrictMode>
+  <QueryClientProvider client={queryClient}>
+    <ChakraProvider>
+      <Router />
+    </ChakraProvider>
+  </QueryClientProvider>
 )
