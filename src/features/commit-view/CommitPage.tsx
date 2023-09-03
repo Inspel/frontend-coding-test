@@ -7,7 +7,7 @@ import {
   AlertTitle,
   VStack
 } from '@chakra-ui/react'
-import { useAppsSearchParams } from '@/features/shared/useAppsSearchParams'
+import { useAppSearchParams } from '@/features/shared/useAppSearchParams'
 import { useQuery } from 'react-query'
 
 import { fetchIndividualCommit } from '@/api/fetchIndividualCommit'
@@ -17,7 +17,7 @@ import { CommitChanges } from './CommitChanges'
 import { ChangesTable } from '@/features/commit-view/ChangesTable'
 
 export const CommitPage = () => {
-  const { repo, owner, commit } = useAppsSearchParams()
+  const { repo, owner, commit } = useAppSearchParams()
 
   const { data, isError } = useQuery(
     ['commit', owner, repo, commit],

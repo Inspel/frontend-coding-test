@@ -1,6 +1,6 @@
 import { useSearchParams } from 'react-router-dom'
 
-export const useAppsSearchParams = () => {
+export const useAppSearchParams = () => {
   const [searchParams] = useSearchParams()
   const owner = searchParams.get('owner')
   const repo = searchParams.get('repo')

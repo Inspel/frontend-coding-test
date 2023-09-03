@@ -11,7 +11,7 @@ type CommitChangesProps = {
 export const CommitChanges = ({ data }: CommitChangesProps) => {
   const { additions, deletions } = data || {}
   return (
-    <Card variant="outline">
+    <Card variant="outline" data-testid="commit-changes">
       <CardBody>
         <Skeleton isLoaded={!!data}>
           <HStack spacing={4}>

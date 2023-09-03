@@ -13,7 +13,7 @@ import {
 import get from 'lodash.get'
 import { Cell } from '@/features/commits-list/Cell'
 import { ROW_MODEL, RowModelType } from '@/features/commits-list/constants'
-import { useAppsSearchParams } from '@/features/shared/useAppsSearchParams'
+import { useAppSearchParams } from '@/features/shared/useAppSearchParams'
 import { useGithubCommits } from '@/features/commits-list/hooks/useGithubCommits'
 import { SkeletonRows } from '@/features/commits-list/SkeletonRows'
 
@@ -25,7 +25,7 @@ const HEADERS_MAP: Record<RowModelType, string> = {
 
 export const CommitsListTable = () => {
   const navigate = useNavigate()
-  const { owner, repo, searchParams } = useAppsSearchParams()
+  const { owner, repo, searchParams } = useAppSearchParams()
   const { data = [], isLoading, isError, error } = useGithubCommits(owner, repo)
 
   const handleRowClick = (sha: string) => {

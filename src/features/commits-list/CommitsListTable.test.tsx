@@ -1,19 +1,19 @@
 import React from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { CommitsListTable } from '@/features/commits-list/CommitsListTable'
-import { useAppsSearchParams } from '@/features/shared/useAppsSearchParams'
+import { useAppSearchParams } from '@/features/shared/useAppSearchParams'
 import { useNavigate } from 'react-router'
 import { useGithubCommits } from '@/features/commits-list/hooks/useGithubCommits'
 import { vi } from 'vitest'
 
-vi.mock('@/features/shared/useAppsSearchParams')
+vi.mock('@/features/shared/useAppSearchParams')
 vi.mock('react-router')
 vi.mock('@/features/commits-list/hooks/useGithubCommits')
 
 describe('CommitsListTable', () => {
   const navigateMock = vi.fn()
-  const date1 = '2018-04-03T09:33:38Z'
-  const date2 = '2019-05-03T09:33:38Z'
+  const timestamp1 = '2018-04-03T09:33:38Z'
+  const timestamp2 = '2019-05-03T09:33:38Z'
 
   const sampleData = [
     {
@@ -22,7 +22,7 @@ describe('CommitsListTable', () => {
         message: 'message1',
         author: {
           name: 'author1',
-          date: date1
+          date: timestamp1
         }
       }
     },
@@ -32,14 +32,14 @@ describe('CommitsListTable', () => {
         message: 'message2',
         author: {
           name: 'author2',
-          date: date2
+          date: timestamp2
         }
       }
     }
   ]
 
   beforeEach(() => {
-    vi.mocked(useAppsSearchParams).mockReturnValue({
+    vi.mocked(useAppSearchParams).mockReturnValue({
       searchParams: new URLSearchParams(),
       owner: null,
       repo: null,
@@ -106,7 +106,9 @@ describe('CommitsListTable', () => {
 
     expect(screen.getByText('message1')).toBeVisible()
     expect(screen.getByText('author1')).toBeVisible()
-    expect(screen.getByText(new Date(date1).toLocaleString())).toBeVisible()
+    expect(
+      screen.getByText(new Date(timestamp1).toLocaleString())
+    ).toBeVisible()
   })
 
   it('should navigate to commit details when a row is clicked', () => {

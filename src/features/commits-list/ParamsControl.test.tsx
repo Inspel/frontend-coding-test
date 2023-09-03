@@ -1,12 +1,12 @@
 import React from 'react'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { ParamsControl } from '@/features/commits-list/ParamsControl'
-import { useAppsSearchParams } from '@/features/shared/useAppsSearchParams'
+import { useAppSearchParams } from '@/features/shared/useAppSearchParams'
 import { useNavigate } from 'react-router'
 import { useGithubCommits } from '@/features/commits-list/hooks/useGithubCommits'
 import { vi } from 'vitest'
 
-vi.mock('@/features/shared/useAppsSearchParams')
+vi.mock('@/features/shared/useAppSearchParams')
 vi.mock('react-router')
 vi.mock('@/features/commits-list/hooks/useGithubCommits')
 
@@ -15,7 +15,7 @@ describe('ParamsControl', () => {
   const refetchMock = vi.fn()
 
   beforeEach(() => {
-    vi.mocked(useAppsSearchParams).mockReturnValue({
+    vi.mocked(useAppSearchParams).mockReturnValue({
       searchParams: new URLSearchParams(),
       owner: null,
       repo: null,

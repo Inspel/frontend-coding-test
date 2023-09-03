@@ -1,11 +1,11 @@
 import { Button, FormControl, FormLabel, Input, VStack } from '@chakra-ui/react'
 import React, { FormEventHandler, useState } from 'react'
-import { useAppsSearchParams } from '@/features/shared/useAppsSearchParams'
+import { useAppSearchParams } from '@/features/shared/useAppSearchParams'
 import { useNavigate } from 'react-router'
 import { useGithubCommits } from '@/features/commits-list/hooks/useGithubCommits'
 
 export const ParamsControl = () => {
-  const { searchParams, owner, repo } = useAppsSearchParams()
+  const { searchParams, owner, repo } = useAppSearchParams()
   const navigate = useNavigate()
 
   const { refetch, isLoading, isError } = useGithubCommits(owner, repo)

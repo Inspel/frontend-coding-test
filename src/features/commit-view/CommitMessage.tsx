@@ -22,7 +22,11 @@ export const CommitMessage = ({ data }: CommitMessageProps) => {
   const { avatarUrl, name, date, message } = data || {}
 
   return (
-    <Card direction={{ base: 'column', sm: 'row' }} variant="outline">
+    <Card
+      direction={{ base: 'column', sm: 'row' }}
+      variant="outline"
+      data-testid="commit-message"
+    >
       <CardBody>
         <Skeleton isLoaded={!!data}>
           <HStack spacing={6} align="start">
@@ -32,6 +36,7 @@ export const CommitMessage = ({ data }: CommitMessageProps) => {
                 boxSize="50px"
                 objectFit="cover"
                 src={avatarUrl}
+                name={name}
               />
               <Text>{name}</Text>
             </HStack>
