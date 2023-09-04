@@ -13,11 +13,11 @@ import { getAppSearchParams } from '@/features/shared/appSearchParamsHelpers'
 const router = createBrowserRouter([
   {
     element: <Outlet />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: '/',
-        element: <CommitsListPage />,
-        errorElement: <ErrorPage />
+        element: <CommitsListPage />
       },
       {
         path: 'commit',
