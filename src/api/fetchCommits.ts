@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { CommitListItemType } from '@/types'
-import { commitListItemSchema } from '@/schemas'
+import { commitListItemSchema } from '@/api/schemas'
 
 export const fetchCommits = async (
   owner: string,

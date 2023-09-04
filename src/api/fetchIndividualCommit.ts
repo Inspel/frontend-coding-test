@@ -1,4 +1,4 @@
-import { individualCommitSchema } from '@/schemas'
+import { individualCommitSchema } from '@/api/schemas'
 import { IndividualCommitType } from '@/types'
 
 export const fetchIndividualCommit = async (
