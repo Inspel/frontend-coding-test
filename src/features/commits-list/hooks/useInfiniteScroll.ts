@@ -20,7 +20,7 @@ export const useInfiniteScroll = ({
           onIntersect()
         }
       },
-      { threshold: 1 }
+      { threshold: 0 }
     )
 
     const observedTarget = target.current

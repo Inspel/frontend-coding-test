@@ -75,8 +75,8 @@ export const CommitsListTable = () => {
           ) : (
             allData.map((item, index) => (
               <Tr
-                ref={index === allData.length - 10 ? lastRowRef : null}
-                key={item.sha as string}
+                ref={index === allData.length - 15 ? lastRowRef : null}
+                key={item.sha}
                 onClick={() => handleRowClick(item.sha)}
                 tabIndex={0}
                 role="button"
