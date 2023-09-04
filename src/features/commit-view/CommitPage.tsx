@@ -14,7 +14,7 @@ import { fetchIndividualCommit } from '@/api/fetchIndividualCommit'
 import React from 'react'
 import { CommitMessage } from '@/features/commit-view/CommitMessage'
 import { CommitChanges } from './CommitChanges'
-import { ChangesTable } from '@/features/commit-view/ChangesTable'
+import { FilesTable } from '@/features/commit-view/FilesTable'
 
 export const CommitPage = () => {
   const { repo, owner, commit } = useAppSearchParams()
@@ -79,7 +79,7 @@ export const CommitPage = () => {
       </VStack>
       <CommitMessage data={commitMessageData} />
       <CommitChanges data={commitChangesData} />
-      <ChangesTable files={data?.files} />
+      <FilesTable files={data?.files} />
     </Container>
   )
 }

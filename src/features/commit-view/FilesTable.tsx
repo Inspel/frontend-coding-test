@@ -17,7 +17,7 @@ type ChangesTableProps = {
   files?: IndividualCommitType['files']
 }
 
-export const ChangesTable = ({ files = [] }: ChangesTableProps) => (
+export const FilesTable = ({ files = [] }: ChangesTableProps) => (
   <VStack align="start" spacing={2} data-testid="changed-files">
     <Box>
       <Text fontWeight="bold">{`Changed Files${
