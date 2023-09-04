@@ -7,7 +7,7 @@ import {
   AlertTitle,
   VStack
 } from '@chakra-ui/react'
-import { useAppSearchParams } from '@/features/shared/useAppSearchParams'
+import { useAppSearchParams } from '@/features/shared/appSearchParamsHelpers'
 import { useQuery } from 'react-query'
 
 import { fetchIndividualCommit } from '@/api/fetchIndividualCommit'

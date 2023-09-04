@@ -1,12 +1,12 @@
 import React from 'react'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { ParamsControl } from '@/features/commits-list/ParamsControl'
-import { useAppSearchParams } from '@/features/shared/useAppSearchParams'
+import { useAppSearchParams } from '@/features/shared/appSearchParamsHelpers'
 import { useNavigate } from 'react-router'
 import { useGithubCommits } from '@/features/commits-list/hooks/useGithubCommits'
 import { vi } from 'vitest'
 
-vi.mock('@/features/shared/useAppSearchParams')
+vi.mock('@/features/shared/appSearchParamsHelpers')
 vi.mock('react-router')
 vi.mock('@/features/commits-list/hooks/useGithubCommits')
 

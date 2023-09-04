@@ -1,11 +1,11 @@
 import React from 'react'
 import { render, screen, within } from '@testing-library/react'
 import { CommitPage } from '@/features/commit-view/CommitPage'
-import { useAppSearchParams } from '@/features/shared/useAppSearchParams'
+import { useAppSearchParams } from '@/features/shared/appSearchParamsHelpers'
 import { useQuery } from 'react-query'
 import { vi } from 'vitest'
 
-vi.mock('@/features/shared/useAppSearchParams')
+vi.mock('@/features/shared/appSearchParamsHelpers')
 vi.mock('react-query')
 
 describe('CommitPage', () => {

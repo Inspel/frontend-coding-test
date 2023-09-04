@@ -1,6 +1,6 @@
 import { Button, FormControl, FormLabel, Input, VStack } from '@chakra-ui/react'
 import React, { FormEventHandler, useState } from 'react'
-import { useAppSearchParams } from '@/features/shared/useAppSearchParams'
+import { useAppSearchParams } from '@/features/shared/appSearchParamsHelpers'
 import { useNavigate } from 'react-router'
 import { useGithubCommits } from '@/features/commits-list/hooks/useGithubCommits'
 

@@ -13,7 +13,7 @@ import {
 import get from 'lodash.get'
 import { Cell } from '@/features/commits-list/Cell'
 import { ROW_MODEL, RowModelType } from '@/features/commits-list/constants'
-import { useAppSearchParams } from '@/features/shared/useAppSearchParams'
+import { useAppSearchParams } from '@/features/shared/appSearchParamsHelpers'
 import { useGithubCommits } from '@/features/commits-list/hooks/useGithubCommits'
 import { SkeletonRows } from '@/features/commits-list/SkeletonRows'
 import { useInfiniteScroll } from '@/features/commits-list/hooks/useInfiniteScroll'
