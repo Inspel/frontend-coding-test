@@ -8,6 +8,9 @@
     "name": "Anton Bozhanov",
     "email": "bozhan89@gmail.com"
   },
+  "engines": {
+    "node": ">=18.17.1"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
