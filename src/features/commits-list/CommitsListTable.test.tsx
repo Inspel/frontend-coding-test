@@ -9,7 +9,7 @@ import { vi } from 'vitest'
 vi.mock('@/features/shared/appSearchParamsHelpers')
 vi.mock('react-router')
 vi.mock('@/features/commits-list/hooks/useGithubCommits')
-vi.mock('@/features/commits-list/hooks/useInfiniteScroll')
+vi.mock('@/features/commits-list/hooks/useIntersectionObserver')
 
 describe('CommitsListTable', () => {
   const navigateMock = vi.fn()

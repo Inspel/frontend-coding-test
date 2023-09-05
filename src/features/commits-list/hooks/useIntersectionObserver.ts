@@ -1,22 +1,21 @@
 import { useEffect, RefObject } from 'react'
 
-interface UseInfiniteScrollProps {
+interface UseIntersectionObserverProps {
   target: RefObject<HTMLElement>
   onIntersect: () => void
-  hasNextPage?: boolean
-  isFetching: boolean
+  shouldCallHandler?: boolean
 }
 
-export const useInfiniteScroll = ({
+export const useIntersectionObserver = ({
   target,
   onIntersect,
-  hasNextPage,
-  isFetching
-}: UseInfiniteScrollProps) => {
+  shouldCallHandler = true
+}: UseIntersectionObserverProps) => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && hasNextPage && !isFetching) {
+        console.log(shouldCallHandler, entry)
+        if (entry.isIntersecting && shouldCallHandler) {
           onIntersect()
         }
       },
@@ -34,5 +33,5 @@ export const useInfiniteScroll = ({
         observer.unobserve(observedTarget)
       }
     }
-  }, [target, onIntersect, hasNextPage, isFetching])
+  }, [target, onIntersect, shouldCallHandler])
 }

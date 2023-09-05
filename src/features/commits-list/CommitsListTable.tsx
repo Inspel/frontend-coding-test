@@ -16,7 +16,7 @@ import { ROW_MODEL, RowModelType } from '@/features/commits-list/constants'
 import { useAppSearchParams } from '@/features/shared/appSearchParamsHelpers'
 import { useGithubCommits } from '@/features/commits-list/hooks/useGithubCommits'
 import { SkeletonRows } from '@/features/commits-list/SkeletonRows'
-import { useInfiniteScroll } from '@/features/commits-list/hooks/useInfiniteScroll'
+import { useIntersectionObserver } from '@/features/commits-list/hooks/useIntersectionObserver'
 
 const HEADERS_MAP: Record<RowModelType, string> = {
   'commit.message': 'Commit message',
@@ -41,11 +41,10 @@ export const CommitsListTable = () => {
 
   const lastRowRef = useRef(null)
 
-  useInfiniteScroll({
+  useIntersectionObserver({
     target: lastRowRef,
     onIntersect: fetchNextPage,
-    hasNextPage: !!hasNextPage,
-    isFetching: isFetchingNextPage
+    shouldCallHandler: !!hasNextPage && !isFetchingNextPage
   })
 
   const handleRowClick = (sha: string) => {
